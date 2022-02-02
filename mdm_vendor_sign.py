@@ -102,7 +102,7 @@ openssl rsa -in key.pem -out the_private_key.key
 	# Sign the CSR with the private key 
 	# openssl sha1 -sign private_key.key -out signed_output.rsa data_to_sign.txt
 	p('Signing CSR with private key... ')
-	args = ['openssl', 'sha1', '-sign', cli_args['key'] ]
+	args = ['openssl', 'sha256', '-sign', cli_args['key'] ]
 	command = subprocess.Popen(args, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)
 	output, error = command.communicate(input = csr_der)
 	if error:
@@ -127,7 +127,7 @@ openssl rsa -in key.pem -out the_private_key.key
 	# TODO : Probably should verify these too
 
 	p('Downloading WWDR intermediate certificate...')
-	intermediate_cer = urllib2.urlopen('https://developer.apple.com/certificationauthority/AppleWWDRCA.cer').read()
+	intermediate_cer = urllib2.urlopen('https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer').read()
 	p(' converting to pem...')
 	intermediate_pem = cer_to_pem(intermediate_cer)
 	p('OK\n')
